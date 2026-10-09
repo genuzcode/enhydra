@@ -190,11 +190,11 @@ FormUtils.LoginFormBase = class LoginFormBase {
 
         this.submitBtn = options.submitButtonSelector
             ? this.form.querySelector(options.submitButtonSelector)
-            : this.form.querySelector('button[type="submit"], .login-btn, .submit-btn, .signin-btn, .auth-btn');
+            : this.form.querySelector('button[type="submit"], .btn-avancar, .submit-btn, .signin-btn, .auth-btn');
         this.passwordInput = this.form.querySelector('input[type="password"]');
         this.passwordToggle =
             document.getElementById('passwordToggle') ||
-            this.form.querySelector('.password-toggle');
+            this.form.querySelector('btn.password-toggle');
         this.successMessage = document.getElementById('successMessage');
         this.cardSelector = options.cardSelector || '.login-card, .form-card, .auth-card, .signin-card';
         this.formGroupSelector = options.formGroupSelector || '.form-group';
