@@ -1,0 +1,48 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- 1. cria o evento
+insert into evento (id_instituicao, id_criador, id_tipo, nome, inicio)
+values (1, 5, 2, 'Palestra de Química', '2026-11-03 14:00-03')
+returning id_evento;
+
+-- 2. vincula as turmas (use o id_evento retornado)
+insert into evento_turma (id_evento, id_turma, id_instituicao)
+values (42, 10, 1), (42, 11, 1);
+
+-- 3. view somente visualização
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Listar eventos para o aluno/turma:
+
+select *
+from evento_escopo
+where id_instituicao = :instituicao
+  and (
+    :turma is null
+    or para_toda_escola
+    or exists (
+      select 1 from evento_turma et
+      where et.id_evento = evento_escopo.id_evento
+        and et.id_turma = :turma
+    )
+  );
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Mostrar as turmas de cada evento:
+
+select e.id_evento, e.nome,
+       coalesce(
+         string_agg(s.nome || ' ' || c.nome, ', ' order by s.nome),
+         'Toda a escola'
+       ) as destinatarios
+from evento e
+left join evento_turma et on et.id_evento = e.id_evento
+left join turma t on t.id_turma = et.id_turma
+left join serie s on s.id_serie = t.id_serie
+left join curso c on c.id_curso = t.id_curso
+where e.id_instituicao = :instituicao
+group by e.id_evento, e.nome;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
