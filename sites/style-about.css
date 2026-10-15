@@ -113,6 +113,7 @@ a:hover {
     position: relative;        
     overflow: hidden;    
     background: white;
+    padding: 15px;
 }
 
 .infos {
@@ -148,20 +149,153 @@ a:hover {
 /*bloco 2*/
 
 #genuz {
-    width: 95%;
+    width: 90%;
     margin: 0 auto;
+    margin-bottom: 20px;
     background-color: #64CCC5;
     border-radius: 10px;
+    border: 2px solid #001C30;
     align-items: center;
     justify-content: center;
+    box-shadow: -7px 5px 0px -2px #001C30;
+    padding: 0px 50px 20px 50px;
 }
+
+.centralizah2 {
+    text-align: center;     
+  }
+
 
 .genuz-titulo {
     padding-top: 40px;
-    text-align: center;
     font-size: 50px;
     color:#001C30;
-    text-shadow: 0px 1px 0px white;
+    display: inline-block;
+    padding: 15px 40px;
+    border: 2px solid #001C30;
+    background-color: #ffffff;
+    border-radius: 999px; 
+    text-align: center;
+    box-shadow: -7px 5px 0px -2px #001C30;
     
 }
+
+.genuz-subtitulo {
+    font-size: 30px;
+    font-weight: bolder;
+    color:#001C30;
+    border: 2px solid #001C30;
+    background-color: #ffffff;
+    border-radius: 7px; 
+    text-align: center;
+    box-shadow: -7px 5px 0px -2px #001C30;
+    max-width: fit-content;
+    padding: 10px;
+    margin-bottom: 0px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 2;  
+    
+}
+
+.infos-subtitulo {
+    font-size: 20px;
+    color:#001C30;
+    border: 2px solid #001C30;
+    background-color: #ffffff;
+    border-radius: 7px; 
+    text-align: center;
+    box-shadow: -7px 5px 0px -2px #001C30;
+    max-width: fit-content;
+    padding: 40px 10px 20px 15px;
+    margin-top: -30px;
+    margin-bottom: 35px;
+    position: relative;
+    z-index: 1;
+    right: -5px;
+}
+
+/*ids*/
+
+.equipe-ids {
+    display: flex;
+    gap: 125px; 
+    margin-top: 20px;
+    margin-bottom: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.ids-genuz {  
+    color:#001C30;
+    border: 2px solid #001C30;
+    background: #FFFFFF;
+    border-radius: 7px; 
+    text-align: center;
+    box-shadow: -7px 5px 0px -2px #001C30;
+    max-width: 25%;
+    flex: 1; 
+    padding: 20px;
+    transition: 0.3s;
+    z-index: 3;
+}
+
+.ids-genuz:hover{
+    background: #FFFFFF;
+    border:5px solid #001C30;
+    outline: 3px solid #ffffff;
+    outline-offset: -3px;
+    transform: scale(1.07);
+}
+
+.foto-id{
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+h4 {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 1px;
+}
+
+h5 {
+    font-size: 15px;
+    margin-top: 2px;
+    margin: 0%;
+    margin-bottom: 2px;
+    color: #001C30;
+}
+
+h6 {
+    margin-top: 2px;
+    font-size:10px;
+    font-weight: lighter;
+}
+
+.texto-id {
+    font-size: 15px;
+    margin-top: 1px;
+}
+
+
+/*rodape*/
+
+footer {
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;
+    margin-top: 65px;
+    background-color:#176B87;
+    color:#FFFFFF;
+    height: 100px;
+}
+
+.rodape-texto {
+    font-size: 20px;
+}
+
 
