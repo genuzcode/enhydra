@@ -119,28 +119,35 @@ body {
 
 .password-toggle {
     position: absolute;
-    right: -6px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 6px;
+    top: 0;
+    bottom: 0;                 /* ocupa a altura toda do wrapper */
+    margin: 0;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;       /* centraliza o ícone na vertical */
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
     color: #64748b;
     transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .password-toggle:hover {
     color: #1e293b;
 }
 
-.password-toggle:hover,
 .password-toggle:active,
-.password-toggle:focus {
-    color: #1e293b;
-    transform: translateY(-50%); 
+.password-toggle:focus,
+.password-toggle:focus-visible {
+    transform: none;
     outline: none;
+    top: 0;
+    bottom: 0;
 }
+
 .eye-icon {
     display: block;
     width: 20px;
