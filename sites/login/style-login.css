@@ -121,7 +121,8 @@ body {
     position: absolute;
     right: 6px;
     top: 0;
-    bottom: 0;                 /* ocupa a altura toda do wrapper */
+    bottom: auto;                 /* ocupa a altura toda do wrapper */
+    height: 48px;
     margin: 0;
     padding: 0 8px;
     display: flex;
