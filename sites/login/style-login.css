@@ -45,6 +45,8 @@ body {
     font-weight: 700;
     color: #FFFFFF;
     margin-bottom: 8px;
+    text-decoration: underline #e7e7e771 2px;
+
 }
 
 .login-header p {
@@ -69,7 +71,7 @@ body {
     border: 0px solid #e2e8f0;
     border-bottom: 1px solid #e2e8f0;
     padding: 24px 16px 8px 16px;
-    color: #1e293b;
+    color: #FFFFFF;
     font-size: 16px;
     transition: all 0.2s ease;
     width: 100%;
@@ -117,19 +119,35 @@ body {
 
 .password-toggle {
     position: absolute;
-    right: -6px;
-    top: 70%;
-    transform: translateY(-50%);
+    right: 6px;
+    top: 50px;
+    bottom: 0;                 /* ocupa a altura toda do wrapper */
+    height: 36px;
+    margin: 0;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;       /* centraliza o ícone na vertical */
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
     color: #64748b;
+    transform: none;
     transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .password-toggle:hover {
     color: #1e293b;
+}
+
+.password-toggle:active,
+.password-toggle:focus,
+.password-toggle:focus-visible {
+    transform: none;
+    outline: none;
+    top: 0;
+    bottom: 0;
 }
 
 .eye-icon {
@@ -150,7 +168,7 @@ body {
 /* Error Messages */
 .error-message {
     display: block;
-    color: #ef4444;
+    color: #ff9797;
     font-size: 0.75rem;
     font-weight: 500;
     margin-top: 4px;
@@ -199,43 +217,88 @@ body {
     transition: color 0.2s ease;
     position: absolute;
     right: 32px;
+    text-decoration: underline #e7e7e771 2px;
 }
 
 .forgot-password:hover {
-    color: #4f46e5;
+    color: #46b8e5;
 }
 
 /* Button */
-.login-btn {
-    width: 100%;
-    background: #6366f1;
+.btn-avancar {
+    width: 88px;
+    height: 37px;
+    background: #5fc4b8;
     border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 24px;
+    padding: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    outline: none;
     margin-bottom: 24px;
+    margin-left: auto;
+
+    /* sombra do botão */
+    box-shadow:
+        0 6px 16px rgba(95, 196, 184, 0.35),  /* brilho turquesa embaixo */
+        0 2px 4px rgba(0, 0, 0, 0.25);        /* sombra escura curta, dá profundidade */
 }
 
-.login-btn:hover {
-    background: #4f46e5;
+.btn-avancar:hover {
+    filter: brightness(1.08);
+    box-shadow:
+        0 8px 20px rgba(95, 196, 184, 0.45),
+        0 3px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
 }
 
-.login-btn:active {
+.btn-avancar:active {
+    transform: translateY(0);
+    box-shadow:
+        0 3px 8px rgba(95, 196, 184, 0.3),
+        0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.btn-circle {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.18);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #112d32;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+
+    /* leve sombra interna no círculo */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.btn-circle img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
+
+.btn-avancar:active {
     transform: translateY(1px);
 }
 
 /* Loading State */
-.login-btn.loading {
+.btn-avancar.loading {
     pointer-events: none;
     background: #a5a6f6;
 }
 
-.btn-text {
+.btn-circle {
     transition: opacity 0.2s ease;
 }
 
@@ -254,11 +317,11 @@ body {
     transition: opacity 0.2s ease;
 }
 
-.login-btn.loading .btn-text {
+.btn-avancar.loading .btn-circle {
     opacity: 0;
 }
 
-.login-btn.loading .btn-loader {
+.btn-avancar.loading .btn-loader {
     opacity: 1;
 }
 
@@ -273,14 +336,14 @@ body {
 }
 
 .signup-link a {
-    color: #6366f1;
+    color: #46b8e5;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .signup-link a:hover {
-    color: #4f46e5;
+    color: #9ce3ff;
 }
 
 /* Success Message */
