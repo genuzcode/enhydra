@@ -120,9 +120,9 @@ body {
 .password-toggle {
     position: absolute;
     right: 6px;
-    top: 0;
+    top: 13px;
     bottom: 0;                 /* ocupa a altura toda do wrapper */
-    height: 20px;
+    height: 36px;
     margin: 0;
     padding: 0 8px;
     display: flex;
