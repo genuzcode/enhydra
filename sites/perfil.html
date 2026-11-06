@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="style-perfil.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <title>Perfil do usuário</title>
+</head>
+<body>
+   <main class="page">
+
+    <!--PERFIL LEITURA-->
+    <!-- Cabeçalho do perfil -->
+    <header class="profile-header">
+      <span class="profile-header__tag">Instituição</span>
+
+      <div class="profile-header__avatar">
+        <!-- Troque o src pela foto do usuário -->
+        <img src="outras/foto-teste.jpg" id="verFoto" alt="Foto usuário">
+      </div>
+
+      <p class="profile-header__role">Função no site</p>
+      <p class="profile-header__name">Nome</p>
+      <p class="profile-header__job verCargo">Função instituição</p>
+
+      <button class="profile-header__edit btn btn-primario" id="abrir" type="button" aria-label="Editar perfil">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-6"/>
+          <path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Seções -->
+    <div class="grid">
+      <section class="section">
+        <h2>Dados pessoais</h2>
+        <div class="field">
+          <div class="field__label">Nome completo</div>
+          <div class="field__value">Thiago Rafael Fofolindo</div>
+        </div>
+        <div class="field">
+          <div class="field__label">E-mail</div>
+          <div class="field__value" id="verEmail">miserinha@gmail.com</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Dados institucionais</h2>
+        <div class="field">
+          <div class="field__label">Unidade</div>
+          <div class="field__value">Etec de Mauá</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Cargo / Função</div>
+          <div class="field__value verCargo">Coordenador</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Nível de acesso</div>
+          <div class="field__value">Administrador</div>
+        </div>
+      </section>
+
+      <section class="section section--full">
+        <h2>Segurança</h2>
+        <div class="field">
+          <div class="field__label">Senha</div>
+          <div class="field__value">Senha</div>
+        </div>
+      </section>
+    </div>
+
+
+    <!--POP UP EDICAO-->
+<dialog id="modal">
+  <!-- method="dialog" fecha o pop-up ao enviar, sem precisar de JS -->
+  <form id="form" method="dialog">
+    <h2>Editar perfil</h2>
+
+    <div class="foto-edicao">
+      <img id="previaFoto" alt="">
+      <input type="file" id="foto" accept="image/*">
+    </div>
+
+    <label for="cargo">Cargo</label>
+    <input type="text" id="cargo" required minlength="2" maxlength="40" placeholder=" ">
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" required placeholder="exemplo@mail.com">
+
+    <div class="acoes">
+      <button type="button" class="btn btn-sec" id="cancelar">Cancelar</button>
+      <button type="submit" class="btn btn-primario">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const FOTO_PADRAO = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#c8c8d4"/><circle cx="50" cy="38" r="18" fill="#fff"/><ellipse cx="50" cy="95" rx="32" ry="26" fill="#fff"/></svg>');
+
+  
+  let fotoNova = null;
+
+
+  let perfil = JSON.parse(localStorage.getItem("perfilUsuario") || "null") || {
+    cargo: "Coordenador",
+    email: "miserinha@gmail.com",
+    foto: "outras/foto-teste.jpg"
+  };
+
+  
+  function renderizar() {
+    document.querySelectorAll(".verCargo").forEach(el => el.textContent = perfil.cargo);
+    $("verEmail").textContent = perfil.email;
+    $("verFoto").src          = perfil.foto;
+  }
+
+
+  $("abrir").onclick = () => {
+    $("cargo").value  = perfil.cargo;
+    $("email").value = perfil.email;
+    $("previaFoto").src = perfil.foto;
+    $("foto").value = "";
+    fotoNova = null;
+    $("modal").showModal();          
+  };
+
+
+  $("cancelar").onclick = () => $("modal").close();
+  $("modal").addEventListener("click", e => {
+    if (e.target === $("modal")) $("modal").close();   // clique no backdrop
+  });
+
+ 
+  $("foto").onchange = e => {
+    const arquivo = e.target.files[0];
+    if (!arquivo) return;
+    const leitor = new FileReader();
+    leitor.onload = () => { fotoNova = leitor.result; $("previaFoto").src = fotoNova; };
+    leitor.readAsDataURL(arquivo);
+  };
+
+  $("form").addEventListener("submit", () => {
+    perfil = {
+      cargo: $("cargo").value.trim(),
+      email: $("email").value.trim(),
+      foto:  fotoNova || perfil.foto
+    };
+    try { localStorage.setItem("perfilUsuario", JSON.stringify(perfil)); }
+    catch { alert("Foto muito grande para salvar. Tente uma menor."); }
+    renderizar();
+  });
+
+  renderizar();
+</script>
+
+
+    <!--Tabela de eventos-->
+    <details class="events" open>
+  <summary class="events__header">
+    Eventos cadastrados
+    <svg class="events__chevron" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9l6 6 6-6"/>
+    </svg>
+  </summary>
+
+  <ul class="events__list">
+    <li class="events__item">
+      <span class="events__bar"></span>
+      <div class="events__info">
+        <p class="events__title" id="verEvento">Nome do evento</p>
+        <p class="events__meta" id="verCriador">Criador</p>
+         <p class="events__dia" id="verData">Data</p>
+      </div>
+      <a class="events__edit" href="#">Editar evento</a>
+    </li>
+
+  </ul>
+</details>
+
+  </main>
+  <script src="perfil.js"></script>
+</body>
+</html>

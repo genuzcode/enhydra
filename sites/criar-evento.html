@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="style-criar-evento.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <title>Perfil do usuário</title>
+</head>
+<body>
+
+<div class="formulario_evento">
+<form id="form-evento">
+  <h1>Criar evento</h1>
+
+  <label>Imagem de capa
+    <input type="file" name="capa" accept="image/*" id="capa">
+  </label>
+
+  <label>Título
+    <input type="text" name="titulo" id="titulo" required>
+  </label>
+
+  <label>Subtítulo
+    <textarea name="subtitulo" id="subtitulo" maxlength="50"></textarea>
+  </label>
+
+   <label>Data de início
+    <input type="datetime-local" name="inicio" required>
+  </label>
+
+   <label>Descrição
+    <textarea name="descricao" id="desc" maxlength="200" required></textarea>
+  </label>
+
+  <label>Lembrete
+    <textarea name="lembrete" id="lembrete" maxlength="80"></textarea>
+  </label>
+
+  <button type="submit" id="criar_evento">Criar evento</button>
+  <button type="reset" id="cancelar">Cancelar</button>
+</form>
+</div>
+
+</body>
+</html>
