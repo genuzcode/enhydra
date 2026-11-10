@@ -49,15 +49,6 @@ body {
   flex-direction: column;
   gap: 4px;
   text-align: left;
-   width: 100%;
-  padding: 10px;
-  background: #fff;
-  color: var(--text);
-  border: 2px solid var(--card-border);
-  border-radius: var(--radius);
-  font: inherit;
-  outline: none;
-  transition: border-color .2s;
 }
 
 #form-evento h1 {
