@@ -23,6 +23,7 @@ body {
     display: flex;
     justify-content: center; /* Centraliza na horizontal */
     align-items: center;     /* Centraliza na vertical */
+    padding: 20px; /* Adiciona um pouco de espaçamento interno */
 }
 
 .formulario_evento {
@@ -57,13 +58,6 @@ body {
   margin: 0;
 }
 
-#form-evento label:has(#capa) {
-  grid-column: 1;
-  grid-row: 2 / span 2;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
 
 #form-evento label:has(#titulo) {
   grid-column: 2;
@@ -89,4 +83,88 @@ body {
 #cancelar {
   grid-column: 2;
   justify-self: start;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--card-border);
+  border-radius: var(--radius);
+  font: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+
+#form-evento .botao-upload-custom {
+  grid-column: 1;
+  grid-row: 2 / span 2;      /* ocupa a mesma altura de título + subtítulo */
+  align-self: stretch;       /* estica até o fim da 2ª linha */
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  padding: 12px 24px;
+  background-color: var(--bg-bottom);
+  color: var(--text);
+  border: 2px dashed var(--card-border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+#form-evento .botao-upload-custom:hover {
+  background-color: #a2e0dc;
+}
+
+#form-evento .input-upload-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  opacity: 0;
+}
+
+#criar_evento {
+  background: var(--accent); 
+  color: var(--accent-dark);
+}
+
+#criar_evento:hover{
+  background: var(--accent-dark); 
+  color: var(--accent);
+  font-size: 18px;
+  transition: .2s;
+}
+
+#cancelar {
+  background: var(--card-border); 
+  color: var(--text-muted);
+}
+
+#cancelar:hover {
+  background: var(--text-muted); 
+  color: var(--card-border);
+  font-size: 18px;
+  transition: .2s;
+}
+
+button {
+  font-family: "Stack Sans Headline", sans-serif;
+  padding: 10px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
 }
