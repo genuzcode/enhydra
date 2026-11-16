@@ -179,65 +179,11 @@
         <p class="events__meta" id="verCriador">Criador</p>
          <p class="events__dia" id="verData">Data</p>
       </div>
-      <a class="events__edit" href="#" id="abrirEditar">Editar evento</a>
+      <a class="events__edit" href="#">Editar evento</a>
     </li>
+
   </ul>
 </details>
-
-<!-- POP UP EVENTO -->
-<dialog id="modalEditar" class="modal">
-  <form id="formEditar" method="dialog">
-    <h2>Editar evento</h2>
-
-    <label for="editEvento">Nome do evento</label>
-    <input type="text" id="editEvento" required>
-
-    <label for="editCriador">Criador</label>
-    <input type="text" id="editCriador" required>
-
-    <label for="editData">Data</label>
-    <input type="date" id="editData" required>
-
-    <div class="modal__acoes">
-      <button type="button" id="cancelarEdicao">Cancelar</button>
-      <button type="submit">Salvar</button>
-    </div>
-  </form>
-</dialog>
-
-<script>
-  const modal = document.getElementById('modalEditar');
-const form = document.getElementById('formEditar');
-
-const verEvento = document.getElementById('verEvento');
-const verCriador = document.getElementById('verCriador');
-const verData = document.getElementById('verData');
-
-const editEvento = document.getElementById('editEvento');
-const editCriador = document.getElementById('editCriador');
-const editData = document.getElementById('editData');
-
-// Abre o pop up já preenchido com os dados atuais
-document.getElementById('abrirEditar').addEventListener('click', (e) => {
-  e.preventDefault();
-  editEvento.value = verEvento.textContent;
-  editCriador.value = verCriador.textContent;
-  editData.value = verData.textContent; // precisa estar no formato AAAA-MM-DD
-  modal.showModal();
-});
-
-// Salva as alterações na lista
-form.addEventListener('submit', () => {
-  verEvento.textContent = editEvento.value;
-  verCriador.textContent = editCriador.value;
-  verData.textContent = editData.value;
-});
-
-// Fecha sem salvar
-document.getElementById('cancelarEdicao').addEventListener('click', () => {
-  modal.close();
-});
-</script>
 
   </main>
   <script src="perfil.js"></script>
