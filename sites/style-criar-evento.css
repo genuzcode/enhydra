@@ -95,6 +95,7 @@ input, textarea {
   font: inherit;
   outline: none;
   transition: border-color .2s;
+  resize: none;
 }
 
 #form-evento .botao-upload-custom {
