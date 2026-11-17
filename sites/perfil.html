@@ -179,12 +179,32 @@
         <p class="events__meta" id="verCriador">Criador</p>
          <p class="events__dia" id="verData">Data</p>
       </div>
-      <a class="events__edit" href="#">Editar evento</a>
+  <button type="button" class="events__edit" id="abrirEvento">Editar evento</button>
     </li>
 
   </ul>
 </details>
 
+<!--POP UP EDICAO EVENTO-->
+<dialog id="modalEvento">
+  <form id="formEvento" method="dialog">
+    <h2>Editar evento</h2>
+
+    <label for="eventoNome">Nome do evento</label>
+    <input type="text" id="eventoNome" required minlength="2" maxlength="80">
+
+    <label for="eventoCriador">Criador</label>
+    <input type="text" id="eventoCriador" required minlength="2" maxlength="60">
+
+    <label for="eventoData">Data</label>
+    <input type="date" id="eventoData" required>
+
+    <div class="acoes">
+      <button type="button" class="btn btn-sec" id="cancelarEvento">Cancelar</button>
+      <button type="submit" class="btn btn-primario">Salvar</button>
+    </div>
+  </form>
+</dialog>
   </main>
   <script src="perfil.js"></script>
 </body>
