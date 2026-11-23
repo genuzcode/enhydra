@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style-eventos.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <title>Eventos</title>
+</head>
+<body>
+  <main class="page">
+
+    <header class="page-header">
+      <div>
+        <h1>Eventos</h1>
+        <p class="page-header__count" id="contador"></p>
+      </div>
+
+      <nav class="page-header__acoes">
+        <a href="perfil.html" class="btn btn-sec">Meu perfil</a>
+        <a href="criar-evento.html" class="btn btn-primario">Criar evento</a>
+      </nav>
+    </header>
+
+    <div class="filtros">
+      <input type="search" id="busca" placeholder="Buscar por título ou descrição" aria-label="Buscar eventos">
+      <select id="ordem" aria-label="Ordenar eventos">
+        <option value="proximos">Mais próximos primeiro</option>
+        <option value="distantes">Mais distantes primeiro</option>
+        <option value="recentes">Criados recentemente</option>
+      </select>
+    </div>
+
+    <!-- Preenchido pelo eventos.js -->
+    <section class="lista-eventos" id="listaEventos" aria-live="polite"></section>
+
+    <p class="vazio" id="vazio" hidden>
+      Nenhum evento encontrado.
+      <a href="criar-evento.html">Criar o primeiro evento</a>
+    </p>
+
+  </main>
+
+  <script src="utils.js"></script>
+  <script src="eventos.js"></script>
+</body>
+</html>
