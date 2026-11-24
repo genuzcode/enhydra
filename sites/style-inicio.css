@@ -16,7 +16,7 @@
 
 body {
   font-family: "Stack Sans Headline", system-ui, sans-serif;
-   background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom)) fixed;
+  background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom)) fixed;
   color: var(--text);
   min-height: 100vh;
 }
@@ -28,8 +28,8 @@ ul { list-style: none; }
 .navbar {
   position: fixed;
   inset: 0 0 auto 0;
-  height: var(--bg-top);
-  background: var(--card-border);
+  height: var(--altura-nav);
+  background: var(--card);
   border-bottom: 1px solid var(--card-border);
   display: flex;
   align-items: center;
@@ -48,9 +48,9 @@ ul { list-style: none; }
   color: inherit;
   cursor: pointer;
   padding: 6px;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
-.navbar__menu:hover { background: var(--fundo); }
+.navbar__menu:hover { background: var(--bg-bottom); }
 
 .navbar__perfil img {
   width: 40px;
@@ -75,7 +75,7 @@ ul { list-style: none; }
   bottom: 0;
   left: 0;
   width: var(--largura-menu);
-  background: var(--superficie);
+  background: var(--card);
   border-right: 1px solid var(--card-border);
   padding: 20px 14px;
   overflow-y: auto;
@@ -87,12 +87,12 @@ ul { list-style: none; }
 .sidebar__link {
   display: block;
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   font-weight: 500;
-  color: var(--accent);
+  color: var(--text-muted);
 }
-.sidebar__link:hover { background: var(--fundo); color: var(--text); }
-.sidebar__link--ativo { background: var(--card); color: var(--text-muted); font-weight: 600; }
+.sidebar__link:hover { background: var(--bg-bottom); color: var(--text); }
+.sidebar__link--ativo { background: var(--accent); color: var(--accent-dark); font-weight: 600; }
 
 /* ================= CONTEÚDO (centralizado) ================= */
 .conteudo {
@@ -109,7 +109,7 @@ ul { list-style: none; }
 .conteudo__topo h1 { font-size: 1.8rem; }
 .conteudo__mes {
   margin-top: 4px;
-  color: var(--text);
+  color: var(--text-muted);
   text-transform: capitalize;
 }
 
@@ -119,7 +119,7 @@ ul { list-style: none; }
 .item {
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -140,10 +140,10 @@ ul { list-style: none; }
   height: 36px;
   display: grid;
   place-items: center;
-  background: var(--fundo);
+  background: var(--bg-bottom);
   border: 0;
   border-radius: 50%;
-  color: var(--texto);
+  color: var(--text);
   cursor: pointer;
 }
 .item__seta:hover { background: var(--accent); color: var(--accent-dark); }
@@ -175,7 +175,7 @@ ul { list-style: none; }
   color: var(--text-muted);
   padding: 40px 0;
 }
-.vazio a { color: var(--destaque); font-weight: 600; }
+.vazio a { color: var(--text); font-weight: 600; }
 
 /* ================= RESPONSIVO ================= */
 @media (max-width: 800px) {
