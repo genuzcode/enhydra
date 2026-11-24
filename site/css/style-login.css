@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-image: url('../outras/fundo-login.jpg');
+    background-image: url('../img/outras/fundo-login.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     backdrop-filter: blur(1px);
