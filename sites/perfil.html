@@ -18,9 +18,9 @@
          stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
 
-  <div class="menu-fundo" id="menuFundo" hidden></div>
+  <div class="menu-fundo" id="menuFundo"></div>
 
-  <aside class="menu-gaveta" id="menuLateral" aria-label="Menu principal" hidden>
+  <aside class="menu-gaveta" id="menuLateral" aria-label="Menu principal">
     <div class="menu-gaveta__topo">
       <span class="menu-gaveta__titulo">Menu</span>
       <button type="button" class="menu-gaveta__fechar" id="menuFechar" aria-label="Fechar menu">
@@ -46,8 +46,8 @@
       var fechar = document.getElementById("menuFechar");
 
       function definir(aberto) {
-        gaveta.hidden = !aberto;
-        fundo.hidden = !aberto;
+        gaveta.classList.toggle("aberto", aberto);
+        fundo.classList.toggle("aberto", aberto);
         botao.setAttribute("aria-expanded", aberto);
         document.body.style.overflow = aberto ? "hidden" : "";
         if (aberto) fechar.focus(); else botao.focus();
@@ -57,7 +57,7 @@
       fechar.addEventListener("click", function () { definir(false); });
       fundo.addEventListener("click", function () { definir(false); });
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && !gaveta.hidden) definir(false);
+        if (e.key === "Escape" && gaveta.classList.contains("aberto")) definir(false);
       });
     })();
   </script>
