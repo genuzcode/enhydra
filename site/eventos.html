@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style-eventos.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <title>Eventos</title>
+</head>
+<body>
+
+  <!-- MENU LATERAL -->
+  <button type="button" class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuLateral">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+
+  <div class="menu-fundo" id="menuFundo"></div>
+
+  <aside class="menu-gaveta" id="menuLateral" aria-label="Menu principal">
+    <div class="menu-gaveta__topo">
+      <span class="menu-gaveta__titulo">Menu</span>
+      <button type="button" class="menu-gaveta__fechar" id="menuFechar" aria-label="Fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <ul class="menu-gaveta__lista">
+      <li><a href="inicio.html" class="menu-gaveta__link">Início</a></li>
+      <li><a href="perfil.html" class="menu-gaveta__link">Meu perfil</a></li>
+      <li><a href="criar-evento.html" class="menu-gaveta__link">Criar evento</a></li>
+      <li><a href="eventos.html" class="menu-gaveta__link menu-gaveta__link--ativo">Eventos</a></li>
+      <li><a href="#" class="menu-gaveta__link">Instituição</a></li>
+      <li><a href="#" class="menu-gaveta__link">Configurações</a></li>
+    </ul>
+  </aside>
+
+  <script>
+    (function () {
+      var botao = document.getElementById("menuBotao");
+      var fundo = document.getElementById("menuFundo");
+      var gaveta = document.getElementById("menuLateral");
+      var fechar = document.getElementById("menuFechar");
+
+      function definir(aberto) {
+        gaveta.classList.toggle("aberto", aberto);
+        fundo.classList.toggle("aberto", aberto);
+        botao.setAttribute("aria-expanded", aberto);
+        document.body.style.overflow = aberto ? "hidden" : "";
+        if (aberto) fechar.focus(); else botao.focus();
+      }
+
+      botao.addEventListener("click", function () { definir(true); });
+      fechar.addEventListener("click", function () { definir(false); });
+      fundo.addEventListener("click", function () { definir(false); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && gaveta.classList.contains("aberto")) definir(false);
+      });
+    })();
+  </script>
+
+  <main class="page">
+
+    <header class="page-header">
+      <div>
+        <h1>Eventos</h1>
+        <p class="page-header__count" id="contador"></p>
+      </div>
+
+      <nav class="page-header__acoes">
+        <a href="perfil.html" class="btn btn-sec">Meu perfil</a>
+        <a href="criar-evento.html" class="btn btn-primario">Criar evento</a>
+      </nav>
+    </header>
+
+    <div class="filtros">
+      <input type="search" id="busca" placeholder="Buscar por título ou descrição" aria-label="Buscar eventos">
+      <select id="ordem" aria-label="Ordenar eventos">
+        <option value="proximos">Mais próximos primeiro</option>
+        <option value="distantes">Mais distantes primeiro</option>
+        <option value="recentes">Criados recentemente</option>
+      </select>
+    </div>
+
+    <!-- Preenchido pelo eventos.js -->
+    <section class="lista-eventos" id="listaEventos" aria-live="polite"></section>
+
+    <p class="vazio" id="vazio" hidden>
+      Nenhum evento encontrado.
+      <a href="criar-evento.html">Criar o primeiro evento</a>
+    </p>
+
+  </main>
+
+  <script src="js/utils.js"></script>
+  <script src="js/eventos.js"></script>
+</body>
+</html>

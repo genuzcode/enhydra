@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style-inicio.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
+  <title>Início</title>
+</head>
+<body>
+
+  <!-- NAV BAR -->
+  <nav class="navbar">
+    <div class="navbar__esq">
+      <button class="navbar__menu" id="alternarMenu" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <span class="navbar__marca">Instituição</span>
+    </div>
+
+    <a href="perfil.html" class="navbar__perfil" aria-label="Meu perfil">
+      <img id="navFoto" src="outras/foto-teste.jpg" alt="Foto do usuário">
+    </a>
+  </nav>
+
+  <div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="menuLateral">
+      <ul class="sidebar__lista">
+        <li><a href="inicio.html" class="sidebar__link sidebar__link--ativo">Início</a></li>
+        <li><a href="perfil.html" class="sidebar__link">Meu perfil</a></li>
+        <li><a href="criar-evento.html" class="sidebar__link">Criar evento</a></li>
+        <li><a href="eventos.html" class="sidebar__link">Eventos</a></li>
+        <li><a href="#" class="sidebar__link">Instituição</a></li>
+        <li><a href="#" class="sidebar__link">Configurações</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+      <div class="conteudo__miolo">
+
+        <header class="conteudo__topo">
+          <h1>Eventos do mês</h1>
+          <p class="conteudo__mes" id="mesAtual"></p>
+        </header>
+
+        <!-- Preenchido pelo inicio.js -->
+        <ul class="agenda" id="agenda" aria-live="polite"></ul>
+
+        <p class="vazio" id="vazio" hidden>
+          Nenhum evento neste mês.
+          <a href="criar-evento.html">Criar evento</a>
+        </p>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/inicio.js"></script>
+</body>
+</html>
