@@ -1,4 +1,22 @@
 
+
+input.menu-check#menuToggle {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
 .menu-botao {
   position: fixed;
   top: 16px;
@@ -16,6 +34,7 @@
   z-index: 900;
 }
 .menu-botao:hover { background: #ececfd; color: #4a4ae0; }
+.menu-check:focus-visible ~ .menu-botao { outline: 3px solid #4a4ae0; outline-offset: 2px; }
 
 .menu-fundo {
   position: fixed;
@@ -25,9 +44,10 @@
   visibility: hidden;
   transition: opacity 0.2s, visibility 0.2s;
   z-index: 950;
+  cursor: pointer;
 }
-.menu-fundo.aberto { opacity: 1; visibility: visible; }
 
+/* Gaveta */
 .menu-gaveta {
   position: fixed;
   top: 0;
@@ -48,7 +68,11 @@
   font-family: "Stack Sans Headline", system-ui, sans-serif;
   overflow-y: auto;
 }
-.menu-gaveta.aberto { transform: translateX(0); visibility: visible; }
+
+/* Estado aberto */
+.menu-check:checked ~ .menu-fundo { opacity: 1; visibility: visible; }
+.menu-check:checked ~ .menu-gaveta { transform: translateX(0); visibility: visible; }
+body:has(.menu-check:checked) { overflow: hidden; }
 
 .menu-gaveta__topo {
   display: flex;
@@ -64,8 +88,6 @@
   height: 36px;
   display: grid;
   place-items: center;
-  background: none;
-  border: 0;
   border-radius: 50%;
   color: #1d1d26;
   cursor: pointer;
@@ -91,5 +113,3 @@
 }
 .menu-gaveta__link:hover { background: #f3f3f7; color: #1d1d26; }
 .menu-gaveta__link--ativo { background: #ececfd; color: #4a4ae0; font-weight: 600; }
-
-body.menu-travado { overflow: hidden; }
