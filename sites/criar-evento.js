@@ -41,7 +41,7 @@ form.addEventListener("submit", e => {
     return;
   }
 
-  window.location.href = "perfil.html";
+  window.location.href = "eventos.html";
 });
 
 // Cancelar: limpa a prévia
