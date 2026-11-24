@@ -1,5 +1,14 @@
-/* Menu lateral retrátil. Usado por perfil.html, eventos.html e criar-evento.html.
-   Precisa estar na MESMA PASTA das páginas. O HTML e o JS do menu ficam em cada página. */
+:root {
+  --bg-top: #f2fdff;
+  --bg-bottom: #e4fffd;
+  --card: #fafeff;
+  --card-border: #adcfd4;
+  --accent: #2fd1b8;
+  --accent-dark: #001C30;
+  --text: #001C30;
+  --text-muted: #176B87;
+  --radius: 6px;
+}
 
 .menu-botao {
   position: fixed;
