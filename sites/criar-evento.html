@@ -12,33 +12,56 @@
 </head>
 <body>
 
-<!-- MENU LATERAL (abre e fecha só com CSS) -->
-<input type="checkbox" id="menuToggle" class="menu-check" aria-label="Abrir ou fechar o menu">
+  <!-- MENU LATERAL -->
+  <button type="button" class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuLateral">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
 
-<label for="menuToggle" class="menu-botao" aria-hidden="true">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-</label>
+  <div class="menu-fundo" id="menuFundo" hidden></div>
 
-<label for="menuToggle" class="menu-fundo" aria-hidden="true"></label>
+  <aside class="menu-gaveta" id="menuLateral" aria-label="Menu principal" hidden>
+    <div class="menu-gaveta__topo">
+      <span class="menu-gaveta__titulo">Menu</span>
+      <button type="button" class="menu-gaveta__fechar" id="menuFechar" aria-label="Fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <ul class="menu-gaveta__lista">
+      <li><a href="inicio.html" class="menu-gaveta__link">Início</a></li>
+      <li><a href="perfil.html" class="menu-gaveta__link">Meu perfil</a></li>
+      <li><a href="criar-evento.html" class="menu-gaveta__link menu-gaveta__link--ativo">Criar evento</a></li>
+      <li><a href="eventos.html" class="menu-gaveta__link">Eventos</a></li>
+      <li><a href="#" class="menu-gaveta__link">Instituição</a></li>
+      <li><a href="#" class="menu-gaveta__link">Configurações</a></li>
+    </ul>
+  </aside>
 
-<aside class="menu-gaveta" id="menuLateral">
-  <div class="menu-gaveta__topo">
-    <span class="menu-gaveta__titulo">Menu</span>
-    <label for="menuToggle" class="menu-gaveta__fechar" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </label>
-  </div>
-  <ul class="menu-gaveta__lista">
-    <li><a href="inicio.html" class="menu-gaveta__link">Início</a></li>
-    <li><a href="perfil.html" class="menu-gaveta__link">Meu perfil</a></li>
-    <li><a href="criar-evento.html" class="menu-gaveta__link menu-gaveta__link--ativo">Criar evento</a></li>
-    <li><a href="eventos.html" class="menu-gaveta__link">Eventos</a></li>
-    <li><a href="#" class="menu-gaveta__link">Instituição</a></li>
-    <li><a href="#" class="menu-gaveta__link">Configurações</a></li>
-  </ul>
-</aside>
+  <script>
+    (function () {
+      var botao = document.getElementById("menuBotao");
+      var fundo = document.getElementById("menuFundo");
+      var gaveta = document.getElementById("menuLateral");
+      var fechar = document.getElementById("menuFechar");
+
+      function definir(aberto) {
+        gaveta.hidden = !aberto;
+        fundo.hidden = !aberto;
+        botao.setAttribute("aria-expanded", aberto);
+        document.body.style.overflow = aberto ? "hidden" : "";
+        if (aberto) fechar.focus(); else botao.focus();
+      }
+
+      botao.addEventListener("click", function () { definir(true); });
+      fechar.addEventListener("click", function () { definir(false); });
+      fundo.addEventListener("click", function () { definir(false); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !gaveta.hidden) definir(false);
+      });
+    })();
+  </script>
+
 
 <div class="formulario_evento">
   <form id="form-evento">
