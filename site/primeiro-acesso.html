@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Primeiro acesso</title></head>
+<body>
+  <h1>Primeiro acesso</h1>
+  <form id="form">
+    <input id="email" type="email" placeholder="Seu e-mail" required>
+    <button>Receber link</button>
+  </form>
+  <p id="aviso"></p>
+
+  <script type="module">
+    import { sb } from './js/supabase.js'
+
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const email = document.getElementById('email').value.trim()
+
+      const { error } = await sb.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: `${location.origin}/definir-senha.html`
+        }
+      })
+
+      document.getElementById('aviso').textContent = error
+        ? 'Não foi possível enviar. Tente de novo em instantes.'
+        : 'Enviamos um link para o seu e-mail. Abra-o para escolher a senha.'
+    })
+  </script>
+</body>
+</html>
