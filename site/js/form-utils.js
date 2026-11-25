@@ -1,6 +1,9 @@
 // Shared utilities for all login-form templates.
 // Exposes the static `FormUtils` helpers and a `FormUtils.LoginFormBase` class
 // that owns the form lifecycle so per-form scripts only override visual hooks.
+//
+// Agora é um módulo ES: use  import { FormUtils } from './form-utils.js'
+// e carregue as páginas com  <script type="module" src="js/script-xxx.js">.
 
 class FormUtils {
     static validateEmail(value) {
@@ -14,6 +17,8 @@ class FormUtils {
         return { isValid: true };
     }
 
+    // Regras para CRIAR uma senha (definir-senha). No login use validateRequired,
+    // senão contas antigas com outra regra seriam barradas antes de tentar entrar.
     static validatePassword(value) {
         if (!value) {
             return { isValid: false, message: 'A senha é obrigatória' };
@@ -25,6 +30,10 @@ class FormUtils {
             return { isValid: false, message: 'A senha deve conter letras maiúsculas, minúsculas e números' };
         }
         return { isValid: true };
+    }
+
+    static validateRequired(message) {
+        return (value) => (value ? { isValid: true } : { isValid: false, message });
     }
 
     static showError(fieldName, message, formGroupSelector = '.form-group') {
@@ -65,18 +74,6 @@ class FormUtils {
 
         wrapper.style.borderColor = '#22c55e';
         setTimeout(() => { wrapper.style.borderColor = ''; }, 2000);
-    }
-
-    static simulateLogin(email, password) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (email === 'admin@demo.com' && password === 'wrongpassword') {
-                    reject(new Error('Email ou senha inválidos'));
-                } else {
-                    resolve({ success: true, user: { email } });
-                }
-            }, 2000);
-        });
     }
 
     // Build the toast with DOM APIs so untrusted `message` values can't inject HTML.
@@ -128,18 +125,21 @@ class FormUtils {
         });
     }
 
-    static setupPasswordToggle(passwordInput, toggleButton) {
-        if (!passwordInput || !toggleButton) return;
+    // Aceita um campo ou uma lista de campos (ex.: "senha" e "confirme a senha"
+    // alternam juntos com um único botão).
+    static setupPasswordToggle(passwordInputs, toggleButton) {
+        const inputs = [].concat(passwordInputs).filter(Boolean);
+        if (!inputs.length || !toggleButton) return;
         toggleButton.addEventListener('click', () => {
-            const isPassword = passwordInput.type === 'password';
-            passwordInput.type = isPassword ? 'text' : 'password';
+            const isPassword = inputs[0].type === 'password';
+            inputs.forEach(input => { input.type = isPassword ? 'text' : 'password'; });
             const eyeIcon = toggleButton.querySelector('.eye-icon');
             eyeIcon?.classList.toggle('show-password', isPassword);
 
             toggleButton.style.transform = 'scale(0.9)';
             setTimeout(() => { toggleButton.style.transform = 'scale(1)'; }, 150);
 
-            passwordInput.focus();
+            inputs[inputs.length - 1].focus();
         });
     }
 
@@ -180,26 +180,32 @@ class FormUtils {
 }
 
 // Base class for every login form. Subclasses override hooks like `decorate`,
-// `onSuccess`, `getElementsToHideOnSuccess`, and `onLoginError` instead of
-// reimplementing the lifecycle.
+// `authenticate`, `onSuccess`, `getElementsToHideOnSuccess`, and `onLoginError`
+// instead of reimplementing the lifecycle.
+//
+// Opções do construtor:
+//   validators   { idDoCampo: (valor, campo) => ({ isValid, message }) }
+//   redirectTo   página para onde ir depois do sucesso (opcional)
+//   hideOnSuccess  seletores extras para esconder no sucesso
 FormUtils.LoginFormBase = class LoginFormBase {
     constructor(options = {}) {
         this.formId = options.formId || 'loginForm';
-        this.form = document.getElementById(this.formId); 
+        this.form = document.getElementById(this.formId);
         if (!this.form) return;
 
         this.submitBtn = options.submitButtonSelector
             ? this.form.querySelector(options.submitButtonSelector)
             : this.form.querySelector('button[type="submit"], .btn-avancar, .submit-btn, .signin-btn, .auth-btn');
-        this.passwordInput = this.form.querySelector('input[type="password"]');
+        this.passwordInputs = [...this.form.querySelectorAll('input[type="password"]')];
         this.passwordToggle =
             document.getElementById('passwordToggle') ||
-            this.form.querySelector('btn.password-toggle');
+            this.form.querySelector('button.password-toggle');
         this.successMessage = document.getElementById('successMessage');
         this.cardSelector = options.cardSelector || '.login-card, .form-card, .auth-card, .signin-card';
         this.formGroupSelector = options.formGroupSelector || '.form-group';
         this.hideOnSuccess = options.hideOnSuccess || [];
-        this.redirectMessage = options.redirectMessage || null;
+        this.redirectTo = options.redirectTo || null;
+        this.redirectDelay = options.redirectDelay ?? 1200;
 
         this.validators = options.validators || {
             email: FormUtils.validateEmail,
@@ -213,7 +219,7 @@ FormUtils.LoginFormBase = class LoginFormBase {
     init() {
         FormUtils.addSharedAnimations();
         FormUtils.setupFloatingLabels(this.form);
-        FormUtils.setupPasswordToggle(this.passwordInput, this.passwordToggle);
+        FormUtils.setupPasswordToggle(this.passwordInputs, this.passwordToggle);
         this.bindCoreEvents();
         this.bindAuxLinks();
         this.bindKeyboardShortcuts();
@@ -275,11 +281,15 @@ FormUtils.LoginFormBase = class LoginFormBase {
         mark.style.transform = 'scale(0.8)';
         setTimeout(() => { mark.style.transform = 'scale(1)'; }, 150);
     }
+    // Links com destino real (href="esqueci-senha.html") navegam normalmente.
+    // Só links "#" (placeholders) são interceptados.
     onForgotPassword(e) {
+        if (e.currentTarget.getAttribute('href') !== '#') return;
         e.preventDefault();
         FormUtils.showNotification('O link de recuperação de senha será enviado no seu email', 'info', this.form);
     }
     onSignupLink(e) {
+        if (e.currentTarget.getAttribute('href') !== '#') return;
         e.preventDefault();
         FormUtils.showNotification('Redirecionando...', 'info', this.form);
     }
@@ -292,6 +302,12 @@ FormUtils.LoginFormBase = class LoginFormBase {
               : btn.classList.contains('apple-btn') ? 'Apple'
               : 'provider');
         FormUtils.showNotification(`Entrando via ${provider}...`, 'info', this.form);
+    }
+
+    // Cada página implementa a chamada ao Supabase aqui. Para sinalizar falha,
+    // lance um Error com a mensagem (em português) que deve aparecer na tela.
+    async authenticate() {
+        throw new Error('authenticate() não foi implementado nesta página');
     }
 
     // ---- lifecycle ----
@@ -314,7 +330,9 @@ FormUtils.LoginFormBase = class LoginFormBase {
         const validator = this.validators[name];
         if (!field || !validator) return true;
 
-        const result = validator(field.value.trim(), field);
+        // Senhas não passam por trim: espaços fazem parte delas.
+        const value = field.type === 'password' ? field.value : field.value.trim();
+        const result = validator(value, field);
         if (result.isValid) {
             this.clearError(name);
             FormUtils.showSuccess(name);
@@ -336,9 +354,7 @@ FormUtils.LoginFormBase = class LoginFormBase {
         this.submitBtn?.classList.add('loading');
 
         try {
-            const email = document.getElementById('email')?.value || '';
-            const password = document.getElementById('password')?.value || '';
-            await FormUtils.simulateLogin(email, password);
+            await this.authenticate();
             this.onSuccess();
         } catch (error) {
             this.onLoginError(error.message);
@@ -348,7 +364,8 @@ FormUtils.LoginFormBase = class LoginFormBase {
         }
     }
 
-    // Default success behavior: fade out the form, fade in #successMessage.
+    // Default success behavior: fade out the form, fade in #successMessage and,
+    // se `redirectTo` foi informado, segue para a próxima página.
     // Forms that want to hide additional elements override `getElementsToHideOnSuccess`
     // or pass `hideOnSuccess` in constructor options.
     onSuccess() {
@@ -372,6 +389,10 @@ FormUtils.LoginFormBase = class LoginFormBase {
                 if (el) el.style.display = 'none';
             });
             this.successMessage?.classList.add('show');
+
+            if (this.redirectTo) {
+                setTimeout(() => { location.href = this.redirectTo; }, this.redirectDelay);
+            }
         }, 300);
     }
 
@@ -389,3 +410,5 @@ FormUtils.LoginFormBase = class LoginFormBase {
         return Object.fromEntries(new FormData(this.form).entries());
     }
 };
+
+export { FormUtils };
