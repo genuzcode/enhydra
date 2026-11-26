@@ -1,33 +1,47 @@
-<!doctype html>
-<html lang="pt-BR">
-<head><meta charset="utf-8"><title>Primeiro acesso</title></head>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro acesso - Enhydra</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%236366f1'/><text x='50' y='68' font-size='60' text-anchor='middle' fill='white' font-family='system-ui,sans-serif'>L</text></svg>">
+    <link rel="stylesheet" href="css/style-login.css">
+</head>
 <body>
-  <h1>Primeiro acesso</h1>
-  <form id="form">
-    <input id="email" type="email" placeholder="Seu e-mail" required>
-    <button>Receber link</button>
-  </form>
-  <p id="aviso"></p>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2>Primeiro acesso</h2>
+                <p>Informe o e-mail cadastrado pela sua escola. Enviaremos um link para você criar a senha.</p>
+            </div>
 
-  <script type="module">
-    import { sb } from './js/supabase.js'
+            <form class="login-form" id="loginForm" novalidate>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" placeholder=" " required autocomplete="email">
+                        <label for="email">E-mail</label>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
 
-    document.getElementById('form').addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const email = document.getElementById('email').value.trim()
+                <button type="submit" class="btn-avancar">
+                    <span class="btn-circle"> <img src="img/outras/seta.png" alt=""></span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
 
-      const { error } = await sb.auth.signInWithOtp({
-        email,
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${location.origin}/definir-senha.html`
-        }
-      })
+            <div class="signup-link">
+                <p>Já tem senha? <a href="login.html">Entrar</a></p>
+            </div>
 
-      document.getElementById('aviso').textContent = error
-        ? 'Não foi possível enviar. Tente de novo em instantes.'
-        : 'Enviamos um link para o seu e-mail. Abra-o para escolher a senha.'
-    })
-  </script>
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3>Link enviado</h3>
+                <p>Confira seu e-mail (e a caixa de spam) e abra o link para criar a senha.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/script-primeiro-acesso.js"></script>
 </body>
 </html>

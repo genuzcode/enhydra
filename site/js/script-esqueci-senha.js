@@ -22,13 +22,12 @@ class EsqueciSenhaForm extends FormUtils.LoginFormBase {
             redirectTo: urlDaPagina('definir-senha.html'),
         });
 
-        if (error) {
-            throw new Error(
-                error.status === 429
-                    ? 'Aguarde cerca de 1 minuto antes de pedir outro link.'
-                    : 'Não foi possível enviar o link. Tente novamente em instantes.'
-            );
-        }
+        const limite = error.status === 429 || /rate_limit/.test(error.code || '');
+        throw new Error(
+            limite
+                ? 'Muitos pedidos de e-mail. Aguarde um pouco antes de tentar de novo.'
+                : 'Não foi possível enviar o link. Tente novamente em instantes.'
+        );
     }
 }
 
